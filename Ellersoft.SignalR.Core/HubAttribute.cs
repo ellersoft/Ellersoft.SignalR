@@ -13,7 +13,7 @@ namespace Ellersoft.SignalR.Core
         public const string BASE_PATH = "hubs";
 
         private static IEnumerable<Type> GetAllHubs() =>
-            typeof(HubAttribute).Assembly.GetTypes()
+            Assembly.GetEntryAssembly()?.GetTypes()
                 .Where(x => x.GetCustomAttribute(typeof(HubAttribute)) != null);
 
         private static string ConvertClassNameForRoute(MemberInfo t) =>
