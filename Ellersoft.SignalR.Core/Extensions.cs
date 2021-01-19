@@ -28,16 +28,16 @@ namespace Ellersoft.SignalR.Core
         /// <param name="builder">The <see cref="AuthenticationBuilder"/> to add JWT Authentication to.</param>
         /// <param name="configuration">The configuration root for the Ellersoft SignalR Options.</param>
         /// <param name="baseHubPath">The base path to the Hub route. Defaults to <see cref="HubAttribute.BASE_PATH"/>.</param>
-        /// <param name="additionalConfiguration">Any additional JWT options for other services.</param>
+        /// <param name="additionalManipulation">Any additional JWT options for other services.</param>
         public static void AddEllersoftJwt(
             this AuthenticationBuilder builder,
             IConfiguration configuration,
             string baseHubPath = null,
-            Action<JwtBearerOptions> additionalConfiguration = null) =>
+            Action<JwtBearerOptions> additionalManipulation = null) =>
             builder.AddJwtBearer(options =>
             {
-                ConfigureJwt(options, configuration, baseHubPath);
-                additionalConfiguration?.Invoke(options);
+                options.ConfigureJwt(configuration, baseHubPath);
+                additionalManipulation?.Invoke(options);
             });
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Ellersoft.SignalR.Core
         /// <param name="configuration">The configuration root for the Ellersoft SignalR Options.</param>
         /// <param name="baseHubPath">The base path to the Hub route. Defaults to <see cref="HubAttribute.BASE_PATH"/>.</param>
         public static void ConfigureJwt(
-            JwtBearerOptions options,
+            this JwtBearerOptions options,
             IConfiguration configuration,
             string baseHubPath = null)
         {
