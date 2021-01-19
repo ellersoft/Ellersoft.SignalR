@@ -1,6 +1,6 @@
 # Ellersoft.SignalR
 
-This project is a wrapper over the Microsoft.SignalR implementation which simplifies the process of using SignalR.
+This project is a wrapper over the Microsoft SignalR implementation which simplifies the process of using SignalR.
 
 To get started:
 
