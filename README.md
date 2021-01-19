@@ -23,7 +23,7 @@ To get started:
        services.AddEllersoftSignalR(configuration);
 
    - **configuration**: The configuration root for the Ellersoft SignalR Options. For example, if your `Jwt` section were at the root of your `appSettings.json`, you would pass the root configuration object.
-    
+   
 4. Add the following to your `ConfigureServices` method, in your `AddAuthentication` pipeline call (typically at the end of the authentication chain):
 
        .AddEllersoftJwt(configuration, baseHubPath, additionalManipulation)
@@ -34,11 +34,15 @@ To get started:
     
    If you are manually configuration a JWT token, you can also use `options.ConfigureJwt(configuration, baseHubPath)` in your `Action<JwtBearerOptions>` delegate, which will also configure the proper JWT components.
     
-5. Add the following to your `ConfigureServices` method, during route registration:
+5. Note, at the end of your `ConfigureServices` method you should add SignalR like normal:
+
+       services.AddSignalR();
+
+6. Add the following to your `Configure` method, during route registration:
 
        endpoints.MapEllersoftSignalR();
    
-6. To begin using SignalR, create a class that implements `Ellersoft.SignalR.Core.BaseHub` and decorate it with the `Ellersoft.SignalR.Core.HubAttribute` and `[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]` attributes. An example hub might look like the following:
+7. To begin using SignalR, create a class that implements `Ellersoft.SignalR.Core.BaseHub` and decorate it with the `Ellersoft.SignalR.Core.HubAttribute` and `[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]` attributes. An example hub might look like the following:
    
        [Hub]
        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
