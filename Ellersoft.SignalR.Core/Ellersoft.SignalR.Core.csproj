@@ -2,6 +2,16 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <Authors>Ellersoft LLC</Authors>
+        <Description>This project is a wrapper over the Microsoft SignalR implementation which simplifies the process of using SignalR.</Description>
+        <Copyright>Copyright (c) 2021 Ellersoft LLC</Copyright>
+        <PackageProjectUrl>https://github.com/ellersoft/Ellersoft.SignalR</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/ellersoft/Ellersoft.SignalR</RepositoryUrl>
+        <Company>Ellersoft LLC</Company>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>

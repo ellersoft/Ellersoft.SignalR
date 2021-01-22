@@ -13,8 +13,8 @@ namespace Ellersoft.SignalR.Core
             Configuration = configuration;
         }
 
-        public static string GetRoute<THub>(string basePath) where THub : BaseHub =>
-            HubAttribute.GetRoute(basePath, typeof(THub));
+        public static string GetRoute<THub>(string basePath = null) where THub : BaseHub =>
+            HubAttribute.GetRoute(basePath ?? HubAttribute.BASE_PATH, typeof(THub));
     }
     
     /// <inheritdoc cref="Hub{T}"/>
@@ -28,7 +28,7 @@ namespace Ellersoft.SignalR.Core
             Configuration = configuration;
         }
 
-        public static string GetRoute<THub>(string basePath) where THub : BaseHub<T> =>
-            HubAttribute.GetRoute(basePath, typeof(THub));
+        public static string GetRoute<THub>(string basePath = null) where THub : BaseHub<T> =>
+            HubAttribute.GetRoute(basePath ?? HubAttribute.BASE_PATH, typeof(THub));
     }
 }
