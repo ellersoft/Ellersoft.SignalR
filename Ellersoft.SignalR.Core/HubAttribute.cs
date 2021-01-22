@@ -32,14 +32,14 @@ namespace Ellersoft.SignalR.Core
             }
         }
 
-        private static string GetRoute(Type hub) =>
+        private static string GetRoute(Type hub, string basePath) =>
             (string)hub.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                 .First(x => x.Name == nameof(GetRoute) && x.IsGenericMethod)
                 .MakeGenericMethod(hub)
-                .Invoke(null, null);
+                .Invoke(null, new object[]{basePath});
 
         private static void InvokeMapHubMethod(MethodInfo mi, Type hub, IEndpointRouteBuilder endpoints, string basePath) =>
-            mi.MakeGenericMethod(hub).Invoke(null, new object[] {endpoints, basePath, GetRoute(hub)});
+            mi.MakeGenericMethod(hub).Invoke(null, new object[] {endpoints, GetRoute(hub, basePath)});
 
         private static MethodInfo GetMapHubMethod() =>
             typeof(HubEndpointRouteBuilderExtensions)

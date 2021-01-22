@@ -80,3 +80,56 @@ To get started:
            }
        }
 
+## Minimal Implementation
+
+A relatively minimal implementation might look like the following:
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        // Add Ellersoft SignalR models
+        services.AddEllersoftSignalR(Configuration);
+        services
+            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => { options.ExpireTimeSpan = TimeSpan.FromDays(30); })
+            .AddEllersoftJwt(Configuration); // Add Ellersoft SignalR JWT Configuration
+       
+        services.AddControllersWithViews();
+      
+        services.AddSignalR(); // Add standard Microsoft SignalR services
+    }
+      
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        var cookieOptions = new CookiePolicyOptions()
+        {
+            MinimumSameSitePolicy = SameSiteMode.Strict
+        };
+        app.UseCookiePolicy(cookieOptions);
+    
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
+        }
+      
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+    
+        app.UseRouting();
+      
+        app.UseAuthentication();
+        app.UseAuthorization();
+      
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+            endpoints.MapEllersoftSignalR(); // Map all routes tagged with `HubAttribute` and that are `BaseHub` or `BaseHub<T>`
+        });
+    }
