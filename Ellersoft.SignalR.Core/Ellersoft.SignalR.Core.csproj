@@ -9,10 +9,11 @@
         <PackageProjectUrl>https://github.com/ellersoft/Ellersoft.SignalR</PackageProjectUrl>
         <RepositoryUrl>https://github.com/ellersoft/Ellersoft.SignalR</RepositoryUrl>
         <Company>Ellersoft LLC</Company>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>1.0.0.0</FileVersion>
+        <AssemblyVersion>1.1.0.0</AssemblyVersion>
+        <FileVersion>1.1.0.0</FileVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageVersion>1.1.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

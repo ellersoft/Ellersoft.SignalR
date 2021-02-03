@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Routing;
@@ -12,15 +13,20 @@ namespace Ellersoft.SignalR.Core
     public static class Extensions
     {
         /// <summary>
-        /// Adds the default Ellersoft SignalR <see cref="JwtMiddleware"/> and <see cref="NameUserIdProvider"/> to the ASP.NET Core Service Collection.
+        /// Adds the default Ellersoft SignalR <see cref="JwtMiddleware"/> and <see cref="IUserIdProvider"/> to the ASP.NET Core Service Collection.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> for registration.</param>
-        /// <param name="configuration">The configuration root for the Ellersoft SignalR Options.</param>
-        public static void AddEllersoftSignalR(this IServiceCollection services, IConfiguration configuration)
+        /// <param name="configuration">The configuration root for the Ellersoft SignalR Options. This should be the node containing the 'Jwt' node.</param>
+        /// <param name="userIdProvider">The <see cref="IUserIdProvider"/> to associate with the SignalR instance.</param>
+        public static void AddEllersoftSignalR(this IServiceCollection services, IConfiguration configuration, IUserIdProvider userIdProvider)
         {
-            services.AddSingleton(provider => new JwtMiddleware(configuration));
-            services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
+            services.AddSingleton(new JwtMiddleware(configuration));
+            services.AddSingleton(userIdProvider);
         }
+
+        /// <inheritdoc cref="AddEllersoftSignalR(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.AspNetCore.SignalR.IUserIdProvider)"/>
+        public static void AddEllersoftSignalR(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddEllersoftSignalR(configuration, new NameUserIdProvider(ClaimTypes.NameIdentifier));
 
         /// <summary>
         /// Adds the default Ellersoft SignalR <see cref="JwtMiddleware"/> bearer token to the ASP.NET Core Authentication Pipeline.
