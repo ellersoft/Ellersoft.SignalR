@@ -23,7 +23,7 @@ To get started:
        services.AddEllersoftSignalR(configuration, userIdProvider);
 
    - **configuration**: The configuration root for the Ellersoft SignalR Options. For example, if your `Jwt` section were at the root of your `appSettings.json`, you would pass the root configuration object.
-   - **userIdProvider**: The <see cref="IUserIdProvider"/> to associate with the SignalR instance. You can create an instance of the `NameUserIdProvider` for an easy start, or create your own `IUserIdProvider`. If excluded, the `NameUserIdProvider` will be used with a `ClaimTypes.NameIdentifier` search pattern.
+   - **userIdProvider**: The `IUserIdProvider` to associate with the SignalR instance. You can create an instance of the `NameUserIdProvider` for an easy start, or create your own `IUserIdProvider`. If excluded, the `NameUserIdProvider` will be used with a `ClaimTypes.NameIdentifier` search pattern.
    
 4. Add the following to your `ConfigureServices` method, in your `AddAuthentication` pipeline call (typically at the end of the authentication chain):
 
